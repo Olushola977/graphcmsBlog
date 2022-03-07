@@ -11,9 +11,8 @@ const PostDetail = ({ post }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const baseUrl = 'https://graphcms-blog-beta.vercel.app/';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     setPath(baseUrl + router.asPath);
-    console.log(path, 'path');
   }, [path])
 
 
