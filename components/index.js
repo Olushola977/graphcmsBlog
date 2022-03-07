@@ -10,3 +10,4 @@ export { default as Comments } from './Comments';
 export { default as FeaturedPosts } from './FeaturedPosts';
 export { default as FeaturedPost } from './FeaturedPost';
 export { default as Loader } from './Loader';
+export { default as Footer } from './Footer';
