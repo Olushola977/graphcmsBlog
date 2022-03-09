@@ -8,7 +8,7 @@ export default async function comments(req, res) {
   const {name, email, comment, slug} = req.body;
   const graphQLClient = new GraphQLClient(graphqlAPI, {
     headers: {
-      authorization: `Bearer ${process.env.GRAPHCMS_TOKEN}`
+      authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_TOKEN}`
     }
   })
   const query = gql`
@@ -23,7 +23,6 @@ export default async function comments(req, res) {
     return res.status(200).send(result);
   } catch (error) {
     console.log(error);
-    return res.status(500).send(error);
   }
   
 

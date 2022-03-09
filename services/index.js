@@ -1,4 +1,4 @@
-import { request, gql } from 'graphql-request';
+import { request, gql, GraphQLClient } from 'graphql-request';
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT;
 
@@ -83,12 +83,24 @@ export const getCategories = async () => {
             categories {
                 name
                 slug
+                image {
+                  url
+                }
             }
         }
     `
     const result = await request(graphqlAPI, query);
 
     return result.categories;
+}
+
+export const PublishComment = async (id) => {
+  const query = gql`
+    mutation publishComment($id: ID!) {
+    publishComment(where: { id: {id} }, to: PUBLISHED) {
+      id
+    }
+  }`
 }
 
 export const getPostDetails = async (slug) => {
@@ -149,6 +161,30 @@ export const getPostDetails = async (slug) => {
     const result = await request(graphqlAPI, query, { slug });
 
     return result.comments;
+}
+
+export const publishComments = async (id, res) => {
+  const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT
+  const graphQLClient = new GraphQLClient(graphqlAPI, {
+    headers: {
+      authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHCMS_TOKEN}`
+    }
+  })
+  const query = gql`
+    mutation publishComment($id: ID!) {
+      publishComment(where: { id: $id }, to: PUBLISHED) {
+        id
+      }
+    }
+  `
+  try {
+    const result = await graphQLClient.request(query, {
+      id
+    });
+    return res.send(result);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export const getFeaturedPosts = async () => {

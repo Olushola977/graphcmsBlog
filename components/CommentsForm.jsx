@@ -1,14 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { submitComment } from '../services';
+import { submitComment, publishComments } from '../services';
 
 const CommentsForm = ({slug}) => {
 
     const [error, setError] = useState(false);
-    const [localStorage, setLocalStorage] = useState(null);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [commentValue, setCommentValue] = useState('');
     const [nameValue, setNameValue] = useState('');
     const [emailValue, setEmailValue] = useState('');
+    const [commentId, setCommentId] = useState('')
 
     useEffect(() => {
       setNameValue(window.localStorage.getItem('name'));
@@ -16,7 +16,7 @@ const CommentsForm = ({slug}) => {
     }, [])
     
 
-    const handleCommentSubmission = () => {
+    const handleCommentSubmission = async () => {
         setError(false);
         const comment = commentValue;
         const name = nameValue;
@@ -35,13 +35,17 @@ const CommentsForm = ({slug}) => {
             window.localStorage.removeItem('name', name);
             window.localStorage.removeItem('email', email);
         }
-        submitComment(commentObj)
+        await submitComment(commentObj)
             .then((res) => {
                 setShowSuccessMessage(true);
-                setTimeout(() => {
-                    setShowSuccessMessage(false);
-                }, 3000);
+                setCommentId(res.createComment.id)
+                console.log(commentId, 'comment id')
             })
+        publishComments(commentId)
+            .then((res) => console.log(res, 'res'))
+        setTimeout(() => {
+            setShowSuccessMessage(false);
+        }, 3000);
     }
 
   return (
