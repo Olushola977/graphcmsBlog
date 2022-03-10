@@ -8,6 +8,7 @@ const Layout = ({children}) => {
         <Header />
         {children}
         <Footer />
+        <script src="https://code.responsivevoice.org/responsivevoice.js?key=xf0f53u4"></script>
     </>
   )
 }

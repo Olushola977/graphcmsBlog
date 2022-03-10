@@ -12,16 +12,27 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    Router.events.on('routeChangeStart', () => setLoading(true));
-    Router.events.on('routeChangeComplete', () => setLoading(false));
-  }, [])
+    useEffect(() => {
+      Router.events.on('routeChangeStart', () => setLoading(true));
+      Router.events.on('routeChangeComplete', () => setLoading(false));
+    }, [])
   
   return (
-    <Layout>
-        {loading && <div className="lds-facebook"><div></div><div></div><div></div></div>}
-        <Component {...pageProps} />
-    </Layout>
+    <>
+      {loading ? (
+        <div className='loading'>
+          <div className='loader-container'>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        </div>
+        ) : (
+        <Layout>
+          <Component {...pageProps} />
+      </Layout>
+      )}
+    </>
     )
 }
 

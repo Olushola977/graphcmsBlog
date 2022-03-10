@@ -17,8 +17,11 @@ const PostDetail = ({ post }) => {
     setPath(baseUrl + router.asPath);
   }, [path])
 
+  let element = ''
+
   useEffect(() => {
     window.onscroll = function() {handleProgress()};
+    element = document.getElementById("progressbar")
   }, [])
   
 
@@ -26,7 +29,7 @@ const handleProgress = () => {
   var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
   var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   var scrolled = (winScroll / height) * 100;
-  document.getElementById("progressbar").style.width = scrolled + "%";
+  element.style.width = scrolled + "%";
 }
 
   return (
@@ -76,6 +79,22 @@ const handleProgress = () => {
           <button type='button' className='absolute w-10 bg-opacity-50 h-10 top-0 right-0 bg-zinc-500 p-2 cursor-pointer' onClick={() => setShowSocialShare(!showSocialShare)}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style={{ width: '1.5rem', height: '1.5rem' }}><path d="M568.9 143.5l-150.9-138.2C404.8-6.773 384 3.039 384 21.84V96C241.2 97.63 128 126.1 128 260.6c0 54.3 35.2 108.1 74.08 136.2c12.14 8.781 29.42-2.238 24.94-16.46C186.7 252.2 256 224 384 223.1v74.2c0 18.82 20.84 28.59 34.02 16.51l150.9-138.2C578.4 167.8 578.4 152.2 568.9 143.5zM416 384c-17.67 0-32 14.33-32 32v31.1l-320-.0013V128h32c17.67 0 32-14.32 32-32S113.7 64 96 64H64C28.65 64 0 92.65 0 128v319.1c0 35.34 28.65 64 64 64l320-.0013c35.35 0 64-28.66 64-64V416C448 398.3 433.7 384 416 384z" /></svg>
           </button>
+          <div className='absolute flex justify-between bg-opacity-50 w-32 h-10 bottom-0 right-50 bg-zinc-700 p-2'>
+            <button type='button' className='text-white cursor-pointer controls tooltip' onClick={() => responsiveVoice.speak(document.getElementById("content").textContent, "UK English Male")}>
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1.7em" height="1.7em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024"><path fill="white" d="M928 161H699.2c-49.1 0-97.1 14.1-138.4 40.7L512 233l-48.8-31.3A255.2 255.2 0 0 0 324.8 161H96c-17.7 0-32 14.3-32 32v568c0 17.7 14.3 32 32 32h228.8c49.1 0 97.1 14.1 138.4 40.7l44.4 28.6c1.3.8 2.8 1.3 4.3 1.3s3-.4 4.3-1.3l44.4-28.6C602 807.1 650.1 793 699.2 793H928c17.7 0 32-14.3 32-32V193c0-17.7-14.3-32-32-32zM324.8 721H136V233h188.8c35.4 0 69.8 10.1 99.5 29.2l48.8 31.3l6.9 4.5v462c-47.6-25.6-100.8-39-155.2-39zm563.2 0H699.2c-54.4 0-107.6 13.4-155.2 39V298l6.9-4.5l48.8-31.3c29.7-19.1 64.1-29.2 99.5-29.2H888v488zM396.9 361H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5zm223.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0-4.1-3.2-7.5-7.1-7.5H627.1c-3.9 0-7.1 3.4-7.1 7.5zM396.9 501H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5zm416 0H627.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5z"/></svg>
+            <span className="tooltiptext">Read Post</span>
+            </button>
+            <button type='button' className='text-white cursor-pointer controls tooltip' onClick={() => responsiveVoice.pause()
+}>
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1.7em" height="1.7em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path fill="white" d="M14 10h-2v12h2V10zm6 0h-2v12h2V10z"/><path fill="white" d="M16 4A12 12 0 1 1 4 16A12 12 0 0 1 16 4m0-2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Z"/></svg>
+              <span className="tooltiptext">Pause</span>
+            </button>
+            <button type='button' className='text-white cursor-pointer controls tooltip' onClick={() => responsiveVoice.resume()
+}>
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1.7em" height="1.7em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 15 15"><path fill="white" fillRule="evenodd" d="M3.05 2.75a.55.55 0 1 0-1.1 0v9.5a.55.55 0 0 0 1.1 0v-9.5Zm2.683-.442A.5.5 0 0 0 5 2.75v9.5a.5.5 0 0 0 .733.442l9-4.75a.5.5 0 0 0 0-.884l-9-4.75ZM6 11.42V3.579L13.429 7.5l-7.43 3.92Z" clipRule="evenodd"/></svg>
+              <span className="tooltiptext">Play</span>
+            </button>
+          </div>
           {showSocialShare && (
             <div className='bg-slate-700 z-20 p-4 absolute top-10 w-1/2 lg:w-1/3 bg-opacity-50 transition-all ease-in-out right-0'>
               <Link href={`https://www.facebook.com/sharer.php?u=${path}`}>
@@ -93,7 +112,7 @@ const handleProgress = () => {
             </div>
           )}
         </div>
-        <div className='px-4 lg:px-0'>
+        <div className='px-4 lg:px-0' id='content'>
           {/* {post.content.raw.children.map((typeObj, index) => {
           const children = typeObj.children.map((item, itemindex) => getContentFragment(itemindex, item.text, item));
 
